@@ -5,6 +5,11 @@ def leer_observaciones(ruta: str) -> dict:
     {ciudad: datos}, con los nombres de ciudad limpios y el campo de viento
     ya separado en dirección y velocidad."""
 
+    with open('observaciones_smn.txt', 'r', encoding='latin-1') as texto:
+    datos=texto.read()
+    datos = datos.split(' / \n') # lista con todos los datos
+    datos
+
 def separar_viento(campo_viento: str) -> tuple:
     """Convierte un campo de viento como 'Norte  3' en (direccion, velocidad).
     Contempla el caso 'Calma' (sin velocidad numérica)."""
