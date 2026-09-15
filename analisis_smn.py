@@ -9,6 +9,14 @@ def leer_observaciones(ruta: str) -> dict:
     datos=texto.read()
     datos = datos.split(' / \n') # lista con todos los datos
     datos
+    
+    listas = []
+    data = {}
+    for i in range(len(datos)-1):
+        listas.append(datos[i].split(';'))
+    
+    for lista in listas:
+        data.update({lista[0]: lista[1:]})
 
 def separar_viento(campo_viento: str) -> tuple:
     """Convierte un campo de viento como 'Norte  3' en (direccion, velocidad).
