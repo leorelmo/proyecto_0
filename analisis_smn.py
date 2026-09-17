@@ -7,16 +7,15 @@ def leer_observaciones(ruta: str) -> dict:
 
     with open('observaciones_smn.txt', 'r', encoding='latin-1') as texto:
     datos=texto.read()
-    datos = datos.split(' / \n') # lista con todos los datos
-    datos
-    
+    datos = datos.replace(' / \n ', '||').replace(' / \n', '').split('||') # lista con todos los datos
+        
     listas = []
     data = {}
     for i in range(len(datos)-1):
-        listas.append(datos[i].split(';'))
-    
+        listas.append(datos[i].split(';')) # separa las ciudades con sus datos
     for lista in listas:
-        data.update({lista[0]: lista[1:]})
+        data.update({lista[0]: lista[1:]}) # crea el diccionario 'ciudad': datos.
+
 
 def separar_viento(campo_viento: str) -> tuple:
     """Convierte un campo de viento como 'Norte  3' en (direccion, velocidad).
@@ -25,7 +24,7 @@ def separar_viento(campo_viento: str) -> tuple:
 
 def cantidad_ciudades(observaciones: dict) -> int:
     """Devuelve la cantidad total de ciudades leídas."""
-
+    print(f'Cantidad de ciudades leídas: {len(data) + 1}')
 
 def cantidad_ciudades_completas(observaciones: dict) -> int:
     """Devuelve la cantidad de ciudades sin ningún dato faltante."""
