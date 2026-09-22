@@ -72,6 +72,15 @@ def top_n_ciudades(observaciones: dict, campo: str, n: int, descendente: bool = 
     """Devuelve las n (por parámetro) ciudades ordenadas según 'campo', de mayor a menor
     (o al revés si descendente=False), en una lista. Reutilizable tanto para temperatura
     como para viento."""
+    vale = []
+    for ciudad, datos in observaciones.items():
+        valor = datos.get(campo)
+        if valor is not None and isinstance(valor, (int, float)):
+            vale.append(ciudad)
+    def valor(ciudad):
+        return observaciones[ciudad][campo]
+    ciud_ord = sorted(vale, key=valor, reverse=descendente)
+    return ciud_ord[:n]
 
 
 def mostrar_resumen(observaciones: dict) -> None:
