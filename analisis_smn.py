@@ -58,7 +58,7 @@ def separar_viento(campo_viento: str) -> tuple:
 
 def cantidad_ciudades(observaciones: dict) -> int:
     """Devuelve la cantidad total de ciudades leídas."""
-    print(f'Cantidad de ciudades leídas: {len(observaciones)}')
+    return len(observaciones)
 
 def cantidad_ciudades_completas(observaciones: dict) -> int:
     """Devuelve la cantidad de ciudades sin ningún dato faltante."""
