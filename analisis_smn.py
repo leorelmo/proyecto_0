@@ -14,7 +14,12 @@ def leer_observaciones(ruta: str) -> dict:
     for i in range(len(datos)-1):
         listas.append(datos[i].split(';')) # separa las ciudades con sus datos
     for lista in listas:
-        data.update({lista[0]: lista[1:]}) # crea el diccionario 'ciudad': datos.
+        if len(lista) > 8:
+                ciudad = lista[0].strip()
+                direccion, velocidad = separar_viento(lista[8])
+                datos_estacion = lista[1:]
+                datos_estacion[7] = (direccion, velocidad)
+                data[ciudad] = datos_estacion # Crea el diccionario 'Ciudad': [Datos]
 
 
 def separar_viento(campo_viento: str) -> tuple:
