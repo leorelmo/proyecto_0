@@ -62,7 +62,11 @@ def cantidad_ciudades(observaciones: dict) -> int:
 
 def cantidad_ciudades_completas(observaciones: dict) -> int:
     """Devuelve la cantidad de ciudades sin ningún dato faltante."""
-
+    ciud_comp = 0
+    for datos_ciudad in observaciones.values():
+        if None not in datos_ciudad.values():
+            ciud_comp += 1
+    return ciud_comp
 
 def top_n_ciudades(observaciones: dict, campo: str, n: int, descendente: bool = True) -> list:
     """Devuelve las n (por parámetro) ciudades ordenadas según 'campo', de mayor a menor
