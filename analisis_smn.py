@@ -6,8 +6,8 @@ def leer_observaciones(ruta: str) -> dict:
     ya separado en dirección y velocidad."""
 
     with open('observaciones_smn.txt', 'r', encoding='latin-1') as texto:
-    datos=texto.read()
-    datos = datos.replace(' / \n ', '||').replace(' / \n', '').split('||') # lista con todos los datos
+        datos = texto.read()
+        datos = datos.replace(' / \n ', '||').replace(' / \n', '').split('||') # lista con todos los datos
         
     listas = []
     data = {}
