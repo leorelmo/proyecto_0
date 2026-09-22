@@ -20,6 +20,14 @@ def leer_observaciones(ruta: str) -> dict:
 def separar_viento(campo_viento: str) -> tuple:
     """Convierte un campo de viento como 'Norte  3' en (direccion, velocidad).
     Contempla el caso 'Calma' (sin velocidad numérica)."""
+    campo_viento = campo_viento.strip()
+    if campo_viento == 'Calma':
+        return ('Calma', 0)
+    partes = campo_viento.rsplit(None, 1)
+    direccion = partes[0]
+    velocidad = partes[1]
+
+    return (direccion, velocidad)
 
 
 def cantidad_ciudades(observaciones: dict) -> int:
