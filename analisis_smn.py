@@ -5,39 +5,60 @@ def leer_observaciones(ruta: str) -> dict:
     {ciudad: datos}, con los nombres de ciudad limpios y el campo de viento
     ya separado en dirección y velocidad."""
 
-    with open('observaciones_smn.txt', 'r', encoding='latin-1') as texto:
-        datos = texto.read()
-        datos = datos.replace(' / \n ', '||').replace(' / \n', '').split('||') # lista con todos los datos
-        
-    listas = []
-    data = {}
-    for i in range(len(datos)-1):
-        listas.append(datos[i].split(';')) # separa las ciudades con sus datos
-    for lista in listas:
-        if len(lista) > 8:
-                ciudad = lista[0].strip()
-                direccion, velocidad = separar_viento(lista[8])
-                datos_estacion = lista[1:]
-                datos_estacion[7] = (direccion, velocidad)
-                data[ciudad] = datos_estacion # Crea el diccionario 'Ciudad': [Datos]
+    observaciones = {}
+    
+    with open(ruta, 'r', encoding='latin-1') as texto:
+        for linea in texto:
+            linea = linea.strip()
+            if not linea:
+                continue
 
+            datos = linea.split(';')
+            if len(datos) != 10:
+                continue
+
+            ciudad = datos[0].strip()
+
+            texto_st = datos[6].strip()
+            if texto_st.lower() == 'no se calcula':
+                sens_termica = None
+            else:
+                sens_termica = float(texto_st)
+
+            direccion, velocidad = separar_viento(datos[8])
+
+            txt_presion = datos[9].strip(' /')
+
+            observaciones[ciudad] = {
+                'fecha': datos[1].strip(),
+                'hora': datos[2].strip(),
+                'condicion': datos[3].strip(),
+                'visibilidad': datos[4].strip(),
+                'temperatura': float(datos[5].strip()),
+                'sens_termica': sens_termica,
+                'humedad': float(datos[7].strip()),
+                'dir_viento': direccion,
+                'vel_viento': velocidad,
+                'presion': float(txt_presion),
+            }
+    return observaciones
+   
 
 def separar_viento(campo_viento: str) -> tuple:
     """Convierte un campo de viento como 'Norte  3' en (direccion, velocidad).
     Contempla el caso 'Calma' (sin velocidad numérica)."""
     campo_viento = campo_viento.strip()
-    if campo_viento == 'Calma':
+    if campo_viento.lower() == 'calma':
         return ('Calma', 0)
     partes = campo_viento.rsplit(None, 1)
     direccion = partes[0]
-    velocidad = partes[1]
-
+    velocidad = int(partes[1])
     return (direccion, velocidad)
 
 
 def cantidad_ciudades(observaciones: dict) -> int:
     """Devuelve la cantidad total de ciudades leídas."""
-    print(f'Cantidad de ciudades leídas: {len(data) + 1}')
+    print(f'Cantidad de ciudades leídas: {len(observaciones)}')
 
 def cantidad_ciudades_completas(observaciones: dict) -> int:
     """Devuelve la cantidad de ciudades sin ningún dato faltante."""
