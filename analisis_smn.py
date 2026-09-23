@@ -85,3 +85,26 @@ def top_n_ciudades(observaciones: dict, campo: str, n: int, descendente: bool = 
 
 def mostrar_resumen(observaciones: dict) -> None:
     """Imprime por pantalla el resumen con todas las características calculadas. Usar n=5"""
+    print('RESUMEN METEOROLÓGICO\n')
+    print(f'Total de ciudades procesadas: {cantidad_ciudades(observaciones)}')
+    print(f'Ciudades con datos completos: {cantidad_ciudades_completas(observaciones)}')
+    
+    print('\nTOP 5 CIUDADES MÁS CÁLIDAS')
+    for ciudad in top_n_ciudades(observaciones, 'temperatura', 5, descendente=True):
+        temp = observaciones[ciudad]['temperatura']
+        print(f'- {ciudad}: {temp}°C')
+    
+    print('\nTOP 5 CIUDADES MÁS FRÍAS')
+    for ciudad in top_n_ciudades(observaciones, 'temperatura', 5, descendente=False):
+        temp = observaciones[ciudad]['temperatura']
+        print(f'- {ciudad}: {temp}°C')
+    
+    print('\nTOP 5 CIUDADES CON MÁS VIENTO')
+    for ciudad in top_n_ciudades(observaciones, 'vel_viento', 5, descendente=True):
+        vel = observaciones[ciudad]['vel_viento']
+        print(f'- {ciudad}: {vel} km/h')
+    
+    print('\nTOP 5 CIUDADES CON MENOS VIENTO')
+    for ciudad in top_n_ciudades(observaciones, 'vel_viento', 5, descendente=False):
+        vel = observaciones[ciudad]['vel_viento']
+        print(f'- {ciudad}: {vel} km/h')
