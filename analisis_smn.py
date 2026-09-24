@@ -108,3 +108,17 @@ def mostrar_resumen(observaciones: dict) -> None:
     for ciudad in top_n_ciudades(observaciones, 'vel_viento', 5, descendente=False):
         vel = observaciones[ciudad]['vel_viento']
         print(f'- {ciudad}: {vel} km/h')
+
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        print('Error: Falta ingresar la ruta del archivo de observaciones.')
+        print('Uso correcto: python analisis_smn.py <ruta_al_archivo>')
+        sys.exit(1)
+    ruta_archivo = sys.argv[1]
+    try:
+        observaciones = leer_observaciones(ruta_archivo)
+        mostrar_resumen(observaciones)
+    except FileNotFoundError:
+        print(f'Error: No se encontró el archivo en la ruta '{ruta_archivo}'.')
+    except Exception as e:
+        print(f'Ocurrió un error inesperado al procesar el archivo: {e}')
