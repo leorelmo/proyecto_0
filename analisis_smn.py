@@ -22,10 +22,13 @@ def parsear_fecha_y_hora(fecha_str: str, hora_str: str) -> datetime:
 def separar_viento(campo_viento: str) -> tuple:
     """Convierte un campo de viento como 'Norte  3' en (direccion, velocidad).
     Contempla el caso 'Calma' (sin velocidad numérica)."""
+
     campo_viento = campo_viento.strip()
     if campo_viento.lower() == 'calma':
         return ('Calma', 0)
+    
     partes = campo_viento.rsplit(None, 1)
+
     direccion = partes[0]
     velocidad = int(partes[1])
     return (direccion, velocidad)
@@ -79,15 +82,18 @@ def leer_observaciones(ruta: str) -> dict:
 
 def cantidad_ciudades(observaciones: dict) -> int:
     """Devuelve la cantidad total de ciudades leídas."""
+    
     return len(observaciones)
 
 
 def cantidad_ciudades_completas(observaciones: dict) -> int:
     """Devuelve la cantidad de ciudades sin ningún dato faltante."""
+
     ciud_comp = 0
     for datos_ciudad in observaciones.values():
         if None not in datos_ciudad.values():
             ciud_comp += 1
+
     return ciud_comp
 
 
@@ -95,13 +101,16 @@ def top_n_ciudades(observaciones: dict, campo: str, n: int, descendente: bool = 
     """Devuelve las n (por parámetro) ciudades ordenadas según 'campo', de mayor a menor
     (o al revés si descendente=False), en una lista. Reutilizable tanto para temperatura
     como para viento."""
+
     vale = []
     for ciudad, datos in observaciones.items():
         valor = datos.get(campo)
         if valor is not None and isinstance(valor, (int, float)):
             vale.append(ciudad)
+
     def valor(ciudad):
         return observaciones[ciudad][campo]
+    
     ciud_ord = sorted(vale, key=valor, reverse=descendente)
     return ciud_ord[:n]
 
@@ -111,6 +120,7 @@ def horarios_reportados(observaciones: dict) -> list:
     reportaron en la observación dada. 
     La lista tendrá horas en el formato string "HH:MM",
     será sin repetir y ordenadas de menor a mayor"""
+
     horarios = []
     for datos in observaciones.values():
         fyh = datos.get('fecha_y_hora')
@@ -123,6 +133,7 @@ def horarios_reportados(observaciones: dict) -> list:
 
 def mostrar_resumen(observaciones: dict) -> None:
     """Imprime por pantalla el resumen con todas las características calculadas. Usar n=5"""
+
     print('RESUMEN METEOROLÓGICO\n')
     print(f'Total de ciudades procesadas: {cantidad_ciudades(observaciones)}')
     print(f'Ciudades con datos completos: {cantidad_ciudades_completas(observaciones)}')
@@ -156,6 +167,7 @@ if __name__ == '__main__':
         print('Error: Falta ingresar la ruta del archivo de observaciones.')
         print('Uso correcto: python analisis_smn.py <ruta_al_archivo>')
         sys.exit(1)
+        
     ruta_archivo = sys.argv[1]
     try:
         observaciones = leer_observaciones(ruta_archivo)
