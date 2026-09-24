@@ -103,6 +103,21 @@ def top_n_ciudades(observaciones: dict, campo: str, n: int, descendente: bool = 
     return ciud_ord[:n]
 
 
+def horarios_reportados(observaciones: dict) -> list:
+    """devuelve una lista de los horarios a los que las estaciones 
+    reportaron en la observación dada. 
+    La lista tendrá horas en el formato string "HH:MM",
+    será sin repetir y ordenadas de menor a mayor"""
+    horarios = []
+    for datos in observaciones.values():
+        fyh = datos.get('fecha_y_hora')
+        if fyh is not None:
+            hora = fyh.strftime('%H:%M')
+            if hora not in horarios:
+                horarios.append(hora)
+    return sorted(horarios)
+
+
 def mostrar_resumen(observaciones: dict) -> None:
     """Imprime por pantalla el resumen con todas las características calculadas. Usar n=5"""
     print('RESUMEN METEOROLÓGICO\n')
