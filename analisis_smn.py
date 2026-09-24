@@ -3,6 +3,7 @@ from datetime import datetime
 meses = {'enero': '01', 'febrero': '02', 'marzo': '03', 'abril': '04', 'mayo': '05', 'junio': '06', 'julio': '07',
         'agosto': '08', 'septiembre': '09', 'octubre': '10', 'noviembre': '11', 'diciembre': '12'}
 
+
 def parsear_fecha_y_hora(fecha_str: str, hora_str: str) -> datetime:
 
     partes_fecha = fecha_str.split('-')
@@ -16,6 +17,18 @@ def parsear_fecha_y_hora(fecha_str: str, hora_str: str) -> datetime:
     hora = int(partes_hora[0])
     minuto = int(partes_hora[1])
     return datetime(anio, mes, dia, hora, minuto)
+
+
+def separar_viento(campo_viento: str) -> tuple:
+    """Convierte un campo de viento como 'Norte  3' en (direccion, velocidad).
+    Contempla el caso 'Calma' (sin velocidad numérica)."""
+    campo_viento = campo_viento.strip()
+    if campo_viento.lower() == 'calma':
+        return ('Calma', 0)
+    partes = campo_viento.rsplit(None, 1)
+    direccion = partes[0]
+    velocidad = int(partes[1])
+    return (direccion, velocidad)
 
 
 def leer_observaciones(ruta: str) -> dict:
@@ -63,18 +76,6 @@ def leer_observaciones(ruta: str) -> dict:
             }
     return observaciones
    
-
-def separar_viento(campo_viento: str) -> tuple:
-    """Convierte un campo de viento como 'Norte  3' en (direccion, velocidad).
-    Contempla el caso 'Calma' (sin velocidad numérica)."""
-    campo_viento = campo_viento.strip()
-    if campo_viento.lower() == 'calma':
-        return ('Calma', 0)
-    partes = campo_viento.rsplit(None, 1)
-    direccion = partes[0]
-    velocidad = int(partes[1])
-    return (direccion, velocidad)
-
 
 def cantidad_ciudades(observaciones: dict) -> int:
     """Devuelve la cantidad total de ciudades leídas."""
