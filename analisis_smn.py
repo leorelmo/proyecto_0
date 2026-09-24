@@ -80,6 +80,7 @@ def cantidad_ciudades(observaciones: dict) -> int:
     """Devuelve la cantidad total de ciudades leídas."""
     return len(observaciones)
 
+
 def cantidad_ciudades_completas(observaciones: dict) -> int:
     """Devuelve la cantidad de ciudades sin ningún dato faltante."""
     ciud_comp = 0
@@ -87,6 +88,7 @@ def cantidad_ciudades_completas(observaciones: dict) -> int:
         if None not in datos_ciudad.values():
             ciud_comp += 1
     return ciud_comp
+
 
 def top_n_ciudades(observaciones: dict, campo: str, n: int, descendente: bool = True) -> list:
     """Devuelve las n (por parámetro) ciudades ordenadas según 'campo', de mayor a menor
@@ -143,6 +145,10 @@ def mostrar_resumen(observaciones: dict) -> None:
     for ciudad in top_n_ciudades(observaciones, 'vel_viento', 5, descendente=False):
         vel = observaciones[ciudad]['vel_viento']
         print(f'- {ciudad}: {vel} km/h')
+
+    horarios = horarios_reportados(observaciones)
+    print(f'\n Horarios de reporte: {', '.join(horarios)}')
+    
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
