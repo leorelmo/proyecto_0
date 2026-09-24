@@ -119,6 +119,6 @@ if __name__ == '__main__':
         observaciones = leer_observaciones(ruta_archivo)
         mostrar_resumen(observaciones)
     except FileNotFoundError:
-        print(f'Error: No se encontró el archivo en la ruta '{ruta_archivo}'.')
+        print(f'Error: No se encontró el archivo en la ruta: {ruta_archivo}.')
     except Exception as e:
         print(f'Ocurrió un error inesperado al procesar el archivo: {e}')
