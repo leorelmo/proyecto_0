@@ -1,4 +1,4 @@
-La idea de este proyecto es obtener una serie de datos a partir de las observaciones actuales del Servicio Meteorológico Nacional. El objetivo es crear una herramienta de líneas de comandos que interprete las observaciones y guarde los datos en un diccionario indexado por ciudad/estación, y calcule características y estadísticas generales sobre esos datos (estaciones leídas, datos faltantes, columnas ausentes, temperaturas y vientos extremos, rankings de ciudades).
+La idea de este proyecto es obtener una serie de datos a partir de las observaciones actuales del Servicio Meteorológico Nacional. El objetivo es crear una herramienta de líneas de comandos que interprete las observaciones y guarde los datos en un diccionario indexado por ciudad (o estación), y calcule características y estadísticas generales sobre esos datos (estaciones leídas, datos faltantes, columnas ausentes, temperaturas y vientos extremos, rankings de ciudades).
 
 
 
