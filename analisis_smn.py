@@ -1,4 +1,22 @@
 import sys
+from datetime import datetime
+meses = {'enero': '01', 'febrero': '02', 'marzo': '03', 'abril': '04', 'mayo': '05', 'junio': '06', 'julio': '07',
+        'agosto': '08', 'septiembre': '09', 'octubre': '10', 'noviembre': '11', 'diciembre': '12'}
+
+def parsear_fecha_y_hora(fecha_str: str, hora_str: str) -> datetime:
+
+    partes_fecha = fecha_str.split('-')
+
+    dia = int(partes_fecha[0])
+    mes = int(meses[partes_fecha[1].lower()])
+    anio = int(partes_fecha[2])
+
+    partes_hora = hora_str.split(':')
+
+    hora = int(partes_hora[0])
+    minuto = int(partes_hora[1])
+    return datetime(anio, mes, dia, hora, minuto)
+
 
 def leer_observaciones(ruta: str) -> dict:
     """Lee el archivo de observaciones del SMN y devuelve un diccionario
@@ -29,9 +47,11 @@ def leer_observaciones(ruta: str) -> dict:
 
             txt_presion = datos[9].strip(' /')
 
+            fecha = datos[1].strip()
+            hora = datos[2].strip()
+
             observaciones[ciudad] = {
-                'fecha': datos[1].strip(),
-                'hora': datos[2].strip(),
+                'fecha_y_hora': parsear_fecha_y_hora(fecha, hora),
                 'condicion': datos[3].strip(),
                 'visibilidad': datos[4].strip(),
                 'temperatura': float(datos[5].strip()),
