@@ -131,6 +131,19 @@ def horarios_reportados(observaciones: dict) -> list:
     return sorted(horarios)
 
 
+def datos_faltantes_por_campo(observaciones: dict) -> dict:
+    faltantes = {}
+
+    for datos in observaciones.values():
+        for campo, valor in datos.items():
+            if campo not in faltantes:
+                faltantes[campo] = 0
+            if valor is None:
+                faltantes[campo] += 1
+    
+    return faltantes
+
+
 def mostrar_resumen(observaciones: dict) -> None:
     """Imprime por pantalla el resumen con todas las características calculadas. Usar n=5"""
 
