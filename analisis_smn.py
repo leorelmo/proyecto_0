@@ -171,6 +171,11 @@ def mostrar_resumen(observaciones: dict) -> None:
         vel = observaciones[ciudad]['vel_viento']
         print(f'- {ciudad}: {vel} km/h')
 
+    print('\nDATOS FALTANTES POR CAMPO:')
+    faltantes = datos_faltantes_por_campo(observaciones)
+    for campo, cantidad in faltantes.items():
+        print(f'- {campo}: {cantidad} faltantes')
+
     horarios = horarios_reportados(observaciones)
     print(f'\n Horarios de reporte: {', '.join(horarios)}')
     
